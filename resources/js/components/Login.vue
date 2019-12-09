@@ -63,7 +63,15 @@
 
             <div class="social-auth-links text-center">
                 <p>- OR -</p>
-                <v-facebook-login app-id="1847547945539092" class="btn btn-block  btn-flat"></v-facebook-login>
+                <!--<v-facebook-login app-id="1847547945539092" class="btn btn-block  btn-flat"></v-facebook-login>-->
+
+                <fb-signin-button
+                        :params="fbSignInParams"
+                        @success="onSignInSuccess"
+                        @error="onSignInError">
+                    Sign in with Facebook
+                </fb-signin-button>
+
                 <button @click.prevent="loginGoogle()" class="btn btn-block btn-google"><i class="fa fa-google-plus"></i> Sign in using Google+</button>
 
                 <br/>
@@ -90,8 +98,8 @@
     import Loading from 'vue-loading-overlay';
     import 'vue-loading-overlay/dist/vue-loading.css';
 
-    // OR, use cherry-pick export (better consistency)
-    import { VFBLogin as VFacebookLogin } from 'vue-facebook-login-component'
+    import FBSignInButton from 'vue-facebook-signin-button'
+    Vue.use(FBSignInButton)
 
     //import GoogleLogin from 'vue-google-login';
     // import { LoaderPlugin } from 'vue-google-login';
@@ -137,6 +145,10 @@
                 email: '',
                 password: '',
                 isLoading: false,
+                fbSignInParams: {
+                    scope: 'email,user_likes',
+                    return_scopes: true
+                },
                 fullPage: true,
                 params: {
                     client_id: '230302491628-tp96rbpasjj46aaph451tom8d8s885sh.apps.googleusercontent.com'
@@ -153,6 +165,16 @@
             console.log('Component mounted.')
         },
         methods: {
+
+            onSignInSuccess (response) {
+                FB.api('/me', dude => {
+                    console.log(`Good to see you, ${dude.name}.`)
+                })
+            },
+            onSignInError (error) {
+                console.log('OH NOES', error)
+            },
+
             onSuccess(googleUser) {
                 console.log(googleUser);
 
@@ -219,9 +241,20 @@
         components: {
             ValidationProvider,
             ValidationObserver,
-            Loading,
-            VFacebookLogin
+            Loading
 
         }
     }
 </script>
+
+
+<style>
+    .fb-signin-button {
+        /* This is where you control how the button looks. Be creative! */
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 3px;
+        background-color: #4267b2;
+        color: #fff;
+    }
+</style>

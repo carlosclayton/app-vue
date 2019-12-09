@@ -63,14 +63,8 @@
 
             <div class="social-auth-links text-center">
                 <p>- OR -</p>
-                <!--<v-facebook-login app-id="1847547945539092" class="btn btn-block  btn-flat"></v-facebook-login>-->
 
-                <fb-signin-button
-                        :params="fbSignInParams"
-                        @success="onSignInSuccess"
-                        @error="onSignInError">
-                    <i class="fa fa-facebook"></i>  Sign in with Facebook
-                </fb-signin-button>
+                <v-facebook-login app-id="1847547945539092" class="btn btn-block  btn-flat"></v-facebook-login>
 
                 <button @click.prevent="loginGoogle()" class="btn btn-block btn-google"><i class="fa fa-google-plus"></i> Sign in using Google+</button>
 
@@ -98,8 +92,8 @@
     import Loading from 'vue-loading-overlay';
     import 'vue-loading-overlay/dist/vue-loading.css';
 
-    import FBSignInButton from 'vue-facebook-signin-button'
-    Vue.use(FBSignInButton)
+
+    import { VFBLogin as VFacebookLogin } from 'vue-facebook-login-component'
 
     //import GoogleLogin from 'vue-google-login';
     // import { LoaderPlugin } from 'vue-google-login';
@@ -241,7 +235,8 @@
         components: {
             ValidationProvider,
             ValidationObserver,
-            Loading
+            Loading,
+            VFacebookLogin
 
         }
     }

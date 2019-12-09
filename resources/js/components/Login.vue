@@ -69,6 +69,7 @@
 
 
                 <facebook-login class="button"
+                                version="v5.0"
                                 appId="1847547945539092"
                                 @login="getUserData"
                                 @logout="onLogout"
@@ -181,6 +182,7 @@
             getUserData() {
                 this.FB.api('/me', 'GET', { fields: 'id,name,email' },
                     userInformation => {
+                        console.log('User face: ', userInformation)
                         this.personalID = userInformation.id;
                         this.email = userInformation.email;
                         this.name = userInformation.name;

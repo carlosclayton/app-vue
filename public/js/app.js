@@ -2319,6 +2319,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2387,6 +2388,7 @@ Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__).forEach(funct
       this.FB.api('/me', 'GET', {
         fields: 'id,name,email'
       }, function (userInformation) {
+        console.log('User face: ', userInformation);
         _this.personalID = userInformation.id;
         _this.email = userInformation.email;
         _this.name = userInformation.name;
@@ -57722,7 +57724,7 @@ var render = function() {
               _vm._v(" "),
               _c("facebook-login", {
                 staticClass: "button",
-                attrs: { appId: "1847547945539092" },
+                attrs: { version: "v5.0", appId: "1847547945539092" },
                 on: {
                   login: _vm.getUserData,
                   logout: _vm.onLogout,

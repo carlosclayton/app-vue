@@ -69,7 +69,7 @@
                         :params="fbSignInParams"
                         @success="onSignInSuccess"
                         @error="onSignInError">
-                    Sign in with Facebook
+                    <i class="fa fa-facebook"></i>  Sign in with Facebook
                 </fb-signin-button>
 
                 <button @click.prevent="loginGoogle()" class="btn btn-block btn-google"><i class="fa fa-google-plus"></i> Sign in using Google+</button>
@@ -251,10 +251,25 @@
 <style>
     .fb-signin-button {
         /* This is where you control how the button looks. Be creative! */
-        display: inline-block;
-        padding: 4px 8px;
-        border-radius: 3px;
-        background-color: #4267b2;
+        cursor: default;
+        min-width: 15rem;
         color: #fff;
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,0.05);
+        margin: 0;
+        padding-top: 0.5rem;
+        padding-left: 1.275rem;
+        padding-right: 1.275rem;
+        padding-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        border-radius: 0.25rem;
+        justify-content: center;
+        background-color: #3c57a4;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .fb-signin-button i{
+        margin-right: 2px;
     }
 </style>

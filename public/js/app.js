@@ -16704,7 +16704,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fb-signin-button {\n    /* This is where you control how the button looks. Be creative! */\n    display: inline-block;\n    padding: 4px 8px;\n    border-radius: 3px;\n    background-color: #4267b2;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.fb-signin-button {\n    /* This is where you control how the button looks. Be creative! */\n    cursor: default;\n    min-width: 15rem;\n    color: #fff;\n    box-sizing: border-box;\n    border: 1px solid rgba(255,255,255,0.05);\n    margin: 0;\n    padding-top: 0.5rem;\n    padding-left: 1.275rem;\n    padding-right: 1.275rem;\n    padding-bottom: 0.5rem;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-align: center;\n            align-items: center;\n    border-radius: 0.25rem;\n    -webkit-box-pack: center;\n            justify-content: center;\n    background-color: #3c57a4;\n    width: 100%;\n    margin-bottom: 5px;\n}\n.fb-signin-button i{\n    margin-right: 2px;\n}\n", ""]);
 
 // exports
 
@@ -57710,9 +57710,8 @@ var render = function() {
                   on: { success: _vm.onSignInSuccess, error: _vm.onSignInError }
                 },
                 [
-                  _vm._v(
-                    "\n                Sign in with Facebook\n            "
-                  )
+                  _c("i", { staticClass: "fa fa-facebook" }),
+                  _vm._v("  Sign in with Facebook\n            ")
                 ]
               ),
               _vm._v(" "),

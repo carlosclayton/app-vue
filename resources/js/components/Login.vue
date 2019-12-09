@@ -64,9 +64,20 @@
             <div class="social-auth-links text-center">
                 <p>- OR -</p>
 
-                <v-facebook-login app-id="1847547945539092" class="btn btn-block  btn-flat"></v-facebook-login>
+                <!--<v-facebook-login app-id="1847547945539092" :login-options="options"-->
+                                  <!--class="btn btn-block  btn-flat"></v-facebook-login>-->
 
-                <button @click.prevent="loginGoogle()" class="btn btn-block btn-google"><i class="fa fa-google-plus"></i> Sign in using Google+</button>
+
+                <facebook-login class="button"
+                                appId="1847547945539092"
+                                @login="getUserData"
+                                @logout="onLogout"
+                                @get-initial-status="getUserData">
+                </facebook-login>
+
+                <button @click.prevent="loginGoogle()" class="btn btn-block btn-google"><i
+                        class="fa fa-google-plus"></i> Sign in using Google+
+                </button>
 
                 <br/>
                 <router-link :to="{ path: 'forgot'}">I forgot my password</router-link>
@@ -93,7 +104,8 @@
     import 'vue-loading-overlay/dist/vue-loading.css';
 
 
-    import { VFBLogin as VFacebookLogin } from 'vue-facebook-login-component'
+    //import {VFBLogin as VFacebookLogin} from 'vue-facebook-login-component'
+    import facebookLogin from 'facebook-login-vuejs';
 
     //import GoogleLogin from 'vue-google-login';
     // import { LoaderPlugin } from 'vue-google-login';
@@ -103,6 +115,7 @@
 
 
     import GAuth from 'vue-google-oauth2'
+
     const gauthOption = {
         clientId: '230302491628-tp96rbpasjj46aaph451tom8d8s885sh.apps.googleusercontent.com',
         scope: 'profile email',
@@ -139,9 +152,15 @@
                 email: '',
                 password: '',
                 isLoading: false,
-                fbSignInParams: {
-                    scope: 'email,user_likes',
-                    return_scopes: true
+                isConnected: false,
+                name: '',
+                email: '',
+                personalID: '',
+                FB: undefined,
+
+
+                options: {
+                    scope: 'email,user_likes'
                 },
                 fullPage: true,
                 params: {
@@ -159,14 +178,26 @@
             console.log('Component mounted.')
         },
         methods: {
-
-            onSignInSuccess (response) {
-                FB.api('/me', dude => {
-                    console.log(`Good to see you, ${dude.name}.`)
-                })
+            getUserData() {
+                this.FB.api('/me', 'GET', { fields: 'id,name,email' },
+                    userInformation => {
+                        this.personalID = userInformation.id;
+                        this.email = userInformation.email;
+                        this.name = userInformation.name;
+                    }
+                )
             },
-            onSignInError (error) {
-                console.log('OH NOES', error)
+            sdkLoaded(payload) {
+                this.isConnected = payload.isConnected
+                this.FB = payload.FB
+                if (this.isConnected) this.getUserData()
+            },
+            onLogin() {
+                this.isConnected = true
+                this.getUserData()
+            },
+            onLogout() {
+                this.isConnected = false;
             },
 
             onSuccess(googleUser) {
@@ -175,7 +206,7 @@
                 // This only gets the user information: id, name, imageUrl and email
                 console.log(googleUser.getBasicProfile());
             },
-            loginGoogle(){
+            loginGoogle() {
                 this.$gAuth.signIn()
                     .then(GoogleUser => {
                         // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
@@ -185,12 +216,12 @@
                         // GoogleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
                         this.isSignIn = this.$gAuth.isAuthorized
                     })
-                    .catch(error  => {
+                    .catch(error => {
                         //on fail do something
                     })
             },
-            onFailure(error){
-                console.log('Error: ',error)
+            onFailure(error) {
+                console.log('Error: ', error)
             },
             onCancel() {
                 console.log('User cancelled the loader.')
@@ -236,7 +267,7 @@
             ValidationProvider,
             ValidationObserver,
             Loading,
-            VFacebookLogin
+            facebookLogin
 
         }
     }
@@ -250,7 +281,7 @@
         min-width: 15rem;
         color: #fff;
         box-sizing: border-box;
-        border: 1px solid rgba(255,255,255,0.05);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         margin: 0;
         padding-top: 0.5rem;
         padding-left: 1.275rem;
@@ -264,7 +295,8 @@
         width: 100%;
         margin-bottom: 5px;
     }
-    .fb-signin-button i{
+
+    .fb-signin-button i {
         margin-right: 2px;
     }
 </style>

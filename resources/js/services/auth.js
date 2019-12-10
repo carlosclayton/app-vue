@@ -26,7 +26,11 @@ export default {
     },
 
     register(name, email, password ){
-        return Jwt.register(name, email, password);
+        return Jwt.register(name, email, password)
+            .then((response) => {
+                localStorage.set('token', response.body.token)
+                return response
+            })
     }
 
 }

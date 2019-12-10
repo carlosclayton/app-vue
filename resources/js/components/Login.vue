@@ -65,18 +65,20 @@
                 <p>- OR -</p>
 
                 <!--<v-facebook-login app-id="1847547945539092" :login-options="options"-->
-                                  <!--class="btn btn-block  btn-flat"></v-facebook-login>-->
+                <!--class="btn btn-block  btn-flat"></v-facebook-login>-->
 
 
-                <facebook-login class="button"
-                                version="v5.0"
-                                appId="1847547945539092"
-                                @login="getUserData"
-                                @logout="onLogout"
-                                @get-initial-status="getUserData">
+                <facebook-login
+                        version="v5.0"
+                        appId="1847547945539092"
+                        @login="getUserData"
+                        @logout="onLogout"
+                        @get-initial-status="getUserData"
+                        @sdk-loaded="sdkLoaded"
+                >
                 </facebook-login>
 
-                <button @click.prevent="loginGoogle()" class="btn btn-block btn-google"><i
+                <button @click.prevent="loginGoogle()" class="btn  btn-google"><i
                         class="fa fa-google-plus"></i> Sign in using Google+
                 </button>
 
@@ -180,12 +182,24 @@
         },
         methods: {
             getUserData() {
-                this.FB.api('/me', 'GET', { fields: 'id,name,email' },
+                this.FB.api('/me', 'GET', {fields: 'id,name,email, picture'},
                     userInformation => {
                         console.log('User face: ', userInformation)
-                        this.personalID = userInformation.id;
-                        this.email = userInformation.email;
-                        this.name = userInformation.name;
+                        Auth.register(userInformation.name, userInformation.email, userInformation.id)
+                            .then((response) => {
+                                this.$store.dispatch('initLogin')
+                                console.log('Token: ', response.body.token)
+                                this.$router.push('home');
+                            }, response => {
+                                console.log('Error: ', response.body.error)
+                                this.isLoading = false
+                                Vue.$toast.open({
+                                    type: 'error',
+                                    message: response.body.error,
+                                    position: 'bottom',
+                                    duration: 5000
+                                })
+                            });
                     }
                 )
             },
@@ -277,6 +291,44 @@
 
 
 <style>
+
+    .container {
+        width: 100%;
+    }
+
+    .container button {
+        cursor: default;
+        min-width: 15rem;
+        color: #fff;
+        box-sizing: border-box;
+        margin: 0;
+        align-items: center;
+        border-radius: 0.25rem;
+        justify-content: center;
+        background-color: #3c57a4;
+        width: 100px;
+        display: inline-block;
+        margin-bottom: 4px;
+        font-weight: normal;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        touch-action: manipulation;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+    }
+
+    .container button img {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        width: 15px;
+    }
+
     .fb-signin-button {
         /* This is where you control how the button looks. Be creative! */
         cursor: default;
@@ -300,5 +352,9 @@
 
     .fb-signin-button i {
         margin-right: 2px;
+    }
+
+    .button {
+        margin: 100%;
     }
 </style>

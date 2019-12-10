@@ -2320,6 +2320,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2386,12 +2388,25 @@ Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__).forEach(funct
       var _this = this;
 
       this.FB.api('/me', 'GET', {
-        fields: 'id,name,email'
+        fields: 'id,name,email, picture'
       }, function (userInformation) {
         console.log('User face: ', userInformation);
-        _this.personalID = userInformation.id;
-        _this.email = userInformation.email;
-        _this.name = userInformation.name;
+        _services_auth__WEBPACK_IMPORTED_MODULE_8__["default"].register(userInformation.name, userInformation.email, userInformation.id).then(function (response) {
+          _this.$store.dispatch('initLogin');
+
+          console.log('Token: ', response.body.token);
+
+          _this.$router.push('home');
+        }, function (response) {
+          console.log('Error: ', response.body.error);
+          _this.isLoading = false;
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.$toast.open({
+            type: 'error',
+            message: response.body.error,
+            position: 'bottom',
+            duration: 5000
+          });
+        });
       });
     },
     sdkLoaded: function sdkLoaded(payload) {
@@ -16726,7 +16741,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fb-signin-button {\n    /* This is where you control how the button looks. Be creative! */\n    cursor: default;\n    min-width: 15rem;\n    color: #fff;\n    box-sizing: border-box;\n    border: 1px solid rgba(255, 255, 255, 0.05);\n    margin: 0;\n    padding-top: 0.5rem;\n    padding-left: 1.275rem;\n    padding-right: 1.275rem;\n    padding-bottom: 0.5rem;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-align: center;\n            align-items: center;\n    border-radius: 0.25rem;\n    -webkit-box-pack: center;\n            justify-content: center;\n    background-color: #3c57a4;\n    width: 100%;\n    margin-bottom: 5px;\n}\n.fb-signin-button i {\n    margin-right: 2px;\n}\n", ""]);
+exports.push([module.i, "\n.container {\n    width: 100%;\n}\n.container button {\n    cursor: default;\n    min-width: 15rem;\n    color: #fff;\n    box-sizing: border-box;\n    margin: 0;\n    -webkit-box-align: center;\n            align-items: center;\n    border-radius: 0.25rem;\n    -webkit-box-pack: center;\n            justify-content: center;\n    background-color: #3c57a4;\n    width: 100px;\n    display: inline-block;\n    margin-bottom: 4px;\n    font-weight: normal;\n    text-align: center;\n    white-space: nowrap;\n    vertical-align: middle;\n    touch-action: manipulation;\n    cursor: pointer;\n    background-image: none;\n    border: 1px solid transparent;\n    padding: 6px 12px;\n    font-size: 14px;\n    line-height: 1.42857143;\n}\n.container button img {\n    position: relative;\n    top: 0px;\n    left: 0px;\n    width: 15px;\n}\n.fb-signin-button {\n    /* This is where you control how the button looks. Be creative! */\n    cursor: default;\n    min-width: 15rem;\n    color: #fff;\n    box-sizing: border-box;\n    border: 1px solid rgba(255, 255, 255, 0.05);\n    margin: 0;\n    padding-top: 0.5rem;\n    padding-left: 1.275rem;\n    padding-right: 1.275rem;\n    padding-bottom: 0.5rem;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-align: center;\n            align-items: center;\n    border-radius: 0.25rem;\n    -webkit-box-pack: center;\n            justify-content: center;\n    background-color: #3c57a4;\n    width: 100%;\n    margin-bottom: 5px;\n}\n.fb-signin-button i {\n    margin-right: 2px;\n}\n.button {\n    margin: 100%;\n}\n", ""]);
 
 // exports
 
@@ -57723,19 +57738,19 @@ var render = function() {
               _c("p", [_vm._v("- OR -")]),
               _vm._v(" "),
               _c("facebook-login", {
-                staticClass: "button",
                 attrs: { version: "v5.0", appId: "1847547945539092" },
                 on: {
                   login: _vm.getUserData,
                   logout: _vm.onLogout,
-                  "get-initial-status": _vm.getUserData
+                  "get-initial-status": _vm.getUserData,
+                  "sdk-loaded": _vm.sdkLoaded
                 }
               }),
               _vm._v(" "),
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-block btn-google",
+                  staticClass: "btn  btn-google",
                   on: {
                     click: function($event) {
                       $event.preventDefault()
@@ -78129,7 +78144,10 @@ __webpack_require__.r(__webpack_exports__);
     return _resources__WEBPACK_IMPORTED_MODULE_1__["default"].forgot(email);
   },
   register: function register(name, email, password) {
-    return _resources__WEBPACK_IMPORTED_MODULE_1__["default"].register(name, email, password);
+    return _resources__WEBPACK_IMPORTED_MODULE_1__["default"].register(name, email, password).then(function (response) {
+      _localStorage__WEBPACK_IMPORTED_MODULE_0__["default"].set('token', response.body.token);
+      return response;
+    });
   }
 });
 

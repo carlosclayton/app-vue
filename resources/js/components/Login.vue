@@ -163,7 +163,7 @@
 
                 fullPage: true,
                 params: {
-                    client_id: '230302491628-tp96rbpasjj46aaph451tom8d8s885sh.apps.googleusercontent.com'
+                    client_id: '595939423328-sv0mjedmmni1m4ooiclcf5p9bd36ndfo.apps.googleusercontent.com'
                 },
                 renderParams: {
                     width: 250,
@@ -210,13 +210,6 @@
             },
             onLogout() {
                 this.isConnected = false;
-            },
-
-            onSuccess(googleUser) {
-                console.log(googleUser);
-
-                // This only gets the user information: id, name, imageUrl and email
-                console.log(googleUser.getBasicProfile());
             },
             loginGoogle() {
                 this.$gAuth.signIn()

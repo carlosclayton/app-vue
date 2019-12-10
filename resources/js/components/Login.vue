@@ -78,7 +78,7 @@
                 >
                 </facebook-login>
 
-                <button @click.prevent="loginGoogle()" class="btn  btn-google"><i
+                <button v-on:click="loginGoogle()" class="btn  btn-google"><i
                         class="fa fa-google-plus"></i> Sign in using Google+
                 </button>
 
@@ -106,8 +106,6 @@
     import Loading from 'vue-loading-overlay';
     import 'vue-loading-overlay/dist/vue-loading.css';
 
-
-    //import {VFBLogin as VFacebookLogin} from 'vue-facebook-login-component'
     import facebookLogin from 'facebook-login-vuejs';
 
     //import GoogleLogin from 'vue-google-login';
@@ -119,19 +117,14 @@
 
     import GAuth from 'vue-google-oauth2'
 
-    const gauthOption = {
-        clientId: '230302491628-tp96rbpasjj46aaph451tom8d8s885sh.apps.googleusercontent.com',
+    const GauthOption = {
+        clientId: '595939423328-44gl35nf3l39h6o42ap8spgdi1nlmved.apps.googleusercontent.com',
         scope: 'profile email',
         prompt: 'select_account'
     }
-    Vue.use(GAuth, gauthOption)
+    Vue.use(GAuth, GauthOption)
 
-    // import Vue from 'vue'
-    // import VueResource from 'vue-resource'
-    //
-    // Vue.use(VueResource)
 
-    import Jwt from '../services/resources'
     import Auth from '../services/auth'
 
     import {extend} from 'vee-validate';
@@ -140,7 +133,6 @@
     import {messages} from 'vee-validate/dist/locale/pt_BR.json';
 
     import {ValidationProvider, ValidationObserver} from 'vee-validate';
-    import localStorage from "../services/localStorage";
 
     Object.keys(rules).forEach(rule => {
         extend(rule, {
@@ -162,14 +154,6 @@
                 FB: undefined,
 
                 fullPage: true,
-                params: {
-                    client_id: '595939423328-sv0mjedmmni1m4ooiclcf5p9bd36ndfo.apps.googleusercontent.com'
-                },
-                renderParams: {
-                    width: 250,
-                    height: 50,
-                    longtitle: true
-                }
 
             }
         },
@@ -212,14 +196,26 @@
                 this.isConnected = false;
             },
             loginGoogle() {
+                console.log('Login google...')
                 this.$gAuth.signIn()
                     .then(GoogleUser => {
-                        // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
-                        console.log('user', GoogleUser)
-                        // GoogleUser.getId() : Get the user's unique ID string.
-                        // GoogleUser.getBasicProfile() : Get the user's basic profile information.
-                        // GoogleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
-                        this.isSignIn = this.$gAuth.isAuthorized
+                        console.log(GoogleUser.w3.ig + " " + GoogleUser.w3.U3 + " " + GoogleUser.w3.Eea)
+                        Auth.register(GoogleUser.w3.ig, GoogleUser.w3.U3, GoogleUser.w3.Eea)
+                            .then((response) => {
+                                this.$store.dispatch('initLogin')
+                                console.log('Token: ', response.body.token)
+                                this.$router.push('home');
+                            }, response => {
+                                console.log('Error: ', response.body.error)
+                                this.isLoading = false
+                                Vue.$toast.open({
+                                    type: 'error',
+                                    message: response.body.error,
+                                    position: 'bottom',
+                                    duration: 5000
+                                })
+                            });
+
                     })
                     .catch(error => {
                         //on fail do something

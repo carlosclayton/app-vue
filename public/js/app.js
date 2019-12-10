@@ -2214,13 +2214,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var facebook_login_vuejs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! facebook-login-vuejs */ "./node_modules/facebook-login-vuejs/dist/facebook-login.min.js");
 /* harmony import */ var facebook_login_vuejs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(facebook_login_vuejs__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var vue_google_oauth2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-google-oauth2 */ "./node_modules/vue-google-oauth2/index.js");
-/* harmony import */ var _services_resources__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services/resources */ "./resources/js/services/resources.js");
-/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../services/auth */ "./resources/js/services/auth.js");
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-/* harmony import */ var vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vee-validate/dist/rules */ "./node_modules/vee-validate/dist/rules.js");
-/* harmony import */ var vee_validate_dist_locale_pt_BR_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vee-validate/dist/locale/pt_BR.json */ "./node_modules/vee-validate/dist/locale/pt_BR.json");
-var vee_validate_dist_locale_pt_BR_json__WEBPACK_IMPORTED_MODULE_11___namespace = /*#__PURE__*/__webpack_require__.t(/*! vee-validate/dist/locale/pt_BR.json */ "./node_modules/vee-validate/dist/locale/pt_BR.json", 1);
-/* harmony import */ var _services_localStorage__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../services/localStorage */ "./resources/js/services/localStorage.js");
+/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services/auth */ "./resources/js/services/auth.js");
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+/* harmony import */ var vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vee-validate/dist/rules */ "./node_modules/vee-validate/dist/rules.js");
+/* harmony import */ var vee_validate_dist_locale_pt_BR_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vee-validate/dist/locale/pt_BR.json */ "./node_modules/vee-validate/dist/locale/pt_BR.json");
+var vee_validate_dist_locale_pt_BR_json__WEBPACK_IMPORTED_MODULE_10___namespace = /*#__PURE__*/__webpack_require__.t(/*! vee-validate/dist/locale/pt_BR.json */ "./node_modules/vee-validate/dist/locale/pt_BR.json", 1);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2327,7 +2325,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_IMPORTED_MODULE_1___default.a);
 
- //import {VFBLogin as VFacebookLogin} from 'vue-facebook-login-component'
 
  //import GoogleLogin from 'vue-google-login';
 // import { LoaderPlugin } from 'vue-google-login';
@@ -2336,27 +2333,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toast_notification__WEBPACK_I
 // });
 
 
-var gauthOption = {
-  clientId: '230302491628-tp96rbpasjj46aaph451tom8d8s885sh.apps.googleusercontent.com',
+var GauthOption = {
+  clientId: '595939423328-44gl35nf3l39h6o42ap8spgdi1nlmved.apps.googleusercontent.com',
   scope: 'profile email',
   prompt: 'select_account'
 };
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_google_oauth2__WEBPACK_IMPORTED_MODULE_6__["default"], gauthOption); // import Vue from 'vue'
-// import VueResource from 'vue-resource'
-//
-// Vue.use(VueResource)
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_google_oauth2__WEBPACK_IMPORTED_MODULE_6__["default"], GauthOption);
 
 
 
 
 
-
-
-
-Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__).forEach(function (rule) {
-  Object(vee_validate__WEBPACK_IMPORTED_MODULE_9__["extend"])(rule, _objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__[rule], {
+Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_9__).forEach(function (rule) {
+  Object(vee_validate__WEBPACK_IMPORTED_MODULE_8__["extend"])(rule, _objectSpread({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_9__[rule], {
     // copies rule configuration
-    message: vee_validate_dist_locale_pt_BR_json__WEBPACK_IMPORTED_MODULE_11__["messages"][rule] // assign message
+    message: vee_validate_dist_locale_pt_BR_json__WEBPACK_IMPORTED_MODULE_10__["messages"][rule] // assign message
 
   }));
 });
@@ -2370,15 +2361,7 @@ Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__).forEach(funct
       isLoading: false,
       isConnected: false,
       name: ''
-    }, _defineProperty(_ref, "email", ''), _defineProperty(_ref, "personalID", ''), _defineProperty(_ref, "FB", undefined), _defineProperty(_ref, "options", {
-      scope: 'email,user_likes'
-    }), _defineProperty(_ref, "fullPage", true), _defineProperty(_ref, "params", {
-      client_id: '230302491628-tp96rbpasjj46aaph451tom8d8s885sh.apps.googleusercontent.com'
-    }), _defineProperty(_ref, "renderParams", {
-      width: 250,
-      height: 50,
-      longtitle: true
-    }), _ref;
+    }, _defineProperty(_ref, "email", ''), _defineProperty(_ref, "FB", undefined), _defineProperty(_ref, "fullPage", true), _ref;
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -2391,7 +2374,7 @@ Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__).forEach(funct
         fields: 'id,name,email, picture'
       }, function (userInformation) {
         console.log('User face: ', userInformation);
-        _services_auth__WEBPACK_IMPORTED_MODULE_8__["default"].register(userInformation.name, userInformation.email, userInformation.id).then(function (response) {
+        _services_auth__WEBPACK_IMPORTED_MODULE_7__["default"].register(userInformation.name, userInformation.email, userInformation.id).then(function (response) {
           _this.$store.dispatch('initLogin');
 
           console.log('Token: ', response.body.token);
@@ -2421,21 +2404,28 @@ Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__).forEach(funct
     onLogout: function onLogout() {
       this.isConnected = false;
     },
-    onSuccess: function onSuccess(googleUser) {
-      console.log(googleUser); // This only gets the user information: id, name, imageUrl and email
-
-      console.log(googleUser.getBasicProfile());
-    },
     loginGoogle: function loginGoogle() {
       var _this2 = this;
 
+      console.log('Login google...');
       this.$gAuth.signIn().then(function (GoogleUser) {
-        // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
-        console.log('user', GoogleUser); // GoogleUser.getId() : Get the user's unique ID string.
-        // GoogleUser.getBasicProfile() : Get the user's basic profile information.
-        // GoogleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
+        console.log(GoogleUser.w3.ig + " " + GoogleUser.w3.U3 + " " + GoogleUser.w3.Eea);
+        _services_auth__WEBPACK_IMPORTED_MODULE_7__["default"].register(GoogleUser.w3.ig, GoogleUser.w3.U3, GoogleUser.w3.Eea).then(function (response) {
+          _this2.$store.dispatch('initLogin');
 
-        _this2.isSignIn = _this2.$gAuth.isAuthorized;
+          console.log('Token: ', response.body.token);
+
+          _this2.$router.push('home');
+        }, function (response) {
+          console.log('Error: ', response.body.error);
+          _this2.isLoading = false;
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.$toast.open({
+            type: 'error',
+            message: response.body.error,
+            position: 'bottom',
+            duration: 5000
+          });
+        });
       })["catch"](function (error) {//on fail do something
       });
     },
@@ -2449,7 +2439,7 @@ Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__).forEach(funct
       var _this3 = this;
 
       this.isLoading = true;
-      _services_auth__WEBPACK_IMPORTED_MODULE_8__["default"].login(this.email, this.password).then(function (response) {
+      _services_auth__WEBPACK_IMPORTED_MODULE_7__["default"].login(this.email, this.password).then(function (response) {
         _this3.$store.dispatch('initLogin');
 
         console.log('Token: ', response.body.token);
@@ -2484,8 +2474,8 @@ Object.keys(vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_10__).forEach(funct
     }
   },
   components: {
-    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_9__["ValidationProvider"],
-    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_9__["ValidationObserver"],
+    ValidationProvider: vee_validate__WEBPACK_IMPORTED_MODULE_8__["ValidationProvider"],
+    ValidationObserver: vee_validate__WEBPACK_IMPORTED_MODULE_8__["ValidationObserver"],
     Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_3___default.a,
     facebookLogin: facebook_login_vuejs__WEBPACK_IMPORTED_MODULE_5___default.a
   }
@@ -57753,7 +57743,6 @@ var render = function() {
                   staticClass: "btn  btn-google",
                   on: {
                     click: function($event) {
-                      $event.preventDefault()
                       return _vm.loginGoogle()
                     }
                   }

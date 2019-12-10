@@ -155,16 +155,12 @@
                 email: '',
                 password: '',
                 isLoading: false,
+
                 isConnected: false,
                 name: '',
                 email: '',
-                personalID: '',
                 FB: undefined,
 
-
-                options: {
-                    scope: 'email,user_likes'
-                },
                 fullPage: true,
                 params: {
                     client_id: '230302491628-tp96rbpasjj46aaph451tom8d8s885sh.apps.googleusercontent.com'

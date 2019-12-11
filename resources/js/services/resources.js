@@ -30,5 +30,9 @@ export default class Jwt {
             role: 2
         })
     }
+
+    static getUsers(){
+        return Vue.http.get('users');
+    }
 }
 

@@ -6,6 +6,8 @@ import Home from './components/Home';
 import Forgot from './components/Forgot';
 import Register from './components/Register';
 
+import UserList from './components/users/UserList';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -34,6 +36,10 @@ const router = new VueRouter({
         {
             path: '/login',
             component: Login
+        },
+        {
+            path: '/users',
+            component: UserList
         },
         {
             path: '*',

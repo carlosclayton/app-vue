@@ -22,16 +22,12 @@
             </form>
             <ul class="sidebar-menu tree" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Dashboard </a></li>
-                    </ul>
+
+                <li>
+                    <router-link :to="{ path: 'home'}"> <i class="fa fa-dashboard"></i> <span>Dashboard</span></router-link>
+                </li>
+                <li>
+                    <router-link :to="{ path: 'users'}"><i class="fa fa-book"></i> Usuários</router-link>
                 </li>
             </ul>
 

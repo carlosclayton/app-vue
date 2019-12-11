@@ -13,6 +13,9 @@ export default {
         return Jwt.getUser()
     },
 
+    users(){
+        return Jwt.getUsers()
+    },
     logout(){
         return Jwt.logout()
             .then((response) => {

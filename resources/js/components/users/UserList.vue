@@ -31,7 +31,7 @@
                             </div>
                             <div class="box-body no-padding">
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li class="active"><a href="#"><i
+                                    <li class="active"><a href="#" @click="getAll()"><i
                                             class="fa fa-fw fa-list-ul"></i> Users
                                     </a></li>
                                     <li><a href="#"><i
@@ -253,21 +253,24 @@
         },
         mounted() {
             console.log('User component monted')
-            this.isLoading = true
-            Auth.users(this.currentPage, this.itemsPerPage, this.sortField, this.sort)
-                .then((response) => {
-                    console.log('Users: ', response)
-                    this.users = response.body.data.data
-                    this.currentPage = response.body.data.meta.pagination.current_page
-                    this.totalItems = response.body.data.meta.pagination.total
-                    this.itemsPerPage = response.body.data.meta.pagination.per_page
-                    this.isLoading = false
-                })
-                .catch((error) => {
-
-                })
+            this.getAll();
         },
         methods: {
+            getAll(){
+                this.isLoading = true
+                Auth.users(this.currentPage, this.itemsPerPage, this.sortField, this.sort)
+                    .then((response) => {
+                        console.log('Users: ', response)
+                        this.users = response.body.data.data
+                        this.currentPage = response.body.data.meta.pagination.current_page
+                        this.totalItems = response.body.data.meta.pagination.total
+                        this.itemsPerPage = response.body.data.meta.pagination.per_page
+                        this.isLoading = false
+                    })
+                    .catch((error) => {
+
+                    })
+            },
             dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
 
             dtUpdateSort: function ({sortField, sort}) {

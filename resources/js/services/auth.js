@@ -14,8 +14,13 @@ export default {
     },
 
     users(page, limit, order, sort){
-        return Jwt.getUsers(page, limit, order, sort)
+        return Jwt.getUsers(page, limit, order, sort);
     },
+
+    usersSearch(by, operator, keyword){
+        return Jwt.getUsersSearch(by, operator, keyword);
+    },
+
     logout(){
         return Jwt.logout()
             .then((response) => {

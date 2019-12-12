@@ -18,9 +18,9 @@
             <section class="content">
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="https://pgenet.pge.ap.gov.br/banks/create"
-                           class="btn btn-primary btn-block margin-bottom btn-lg"><span
-                                class="glyphicon glyphicon-plus"></span> Add </a>
+                        <!--<a href="#"-->
+                           <!--class="btn btn-primary btn-block margin-bottom btn-lg"><span-->
+                                <!--class="glyphicon glyphicon-plus"></span> Add </a>-->
                         <div class="box box-primary">
                             <div class="box-header with-border"><h3 class="box-title"><span
                                     class="glyphicon glyphicon-cog"></span> Access </h3>
@@ -34,12 +34,13 @@
                                     <li class="active"><a href="#" @click="getAll()"><i
                                             class="fa fa-fw fa-list-ul"></i> Users
                                     </a></li>
-                                    <li><a href="#"><i
-                                            class="fa fa-trash-o"></i> Trash
-                                    </a></li>
+                                    <!--<li><a href="#"><i-->
+                                            <!--class="fa fa-trash-o"></i> Trash-->
+                                    <!--</a></li>-->
                                 </ul>
                             </div>
                         </div>
+
                         <div class="box box-primary">
                             <div class="box-header with-border"><h3 class="box-title"><span
                                     class="glyphicon glyphicon-tasks"></span> Filters</h3>
@@ -50,8 +51,8 @@
                             </div>
                             <div class="box-body no-padding">
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#"><i class="fa fa-circle-o text-blue"></i> Clients</a></li>
-                                    <li><a href="#"><i class="fa fa-circle-o text-green"></i> Admin</a></li>
+                                    <li><a href="#" @click="byFilter(2)"><i class="fa fa-circle-o text-blue"></i> Clients</a></li>
+                                    <li><a href="#" @click="byFilter(1)"><i class="fa fa-circle-o text-green"></i> Admin</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -66,39 +67,58 @@
                                 </div>
                             </div>
                             <div class="box-body">
-                                <form method="POST" action="#"
-                                      accept-charset="UTF-8"><input name="_token" type="hidden"
-                                                                    value="mosIy5zXRKML8CMgmrYO8s0hD3mkGyod2tKoBIvN">
-                                    <div class="col-md-6">
-                                        <div class="form-group"><label for="por">Por:</label> <select id="por"
-                                                                                                      name="por"
-                                                                                                      class="form-control">
-                                            <option value="id" selected="selected">ID</option>
-                                            <option value="name">Nome</option>
-                                            <option value="email">E-mail</option>
-                                            <option value="role">Role</option>
-                                            <option value="created_at">Data</option>
-                                        </select></div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group"><label for="operador">Operador:</label> <select
-                                                id="operador" name="operador" class="form-control">
-                                            <option value="=" selected="selected">Igual a</option>
-                                            <option value="<>">Diferente de</option>
-                                            <option value="like">Contém a</option>
-                                            <option value=">=">Maior que</option>
-                                            <option value="<=">Menor que</option>
-                                        </select></div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="input-group"><input id="search" required="required" name="palavra"
-                                                                        type="id" class="form-control" im-insert="true"
-                                                                        placeholder="Palavra-chave..."> <span
-                                                class="input-group-btn"><button type="submit"
-                                                                                class="btn btn-block btn-primary"><i
-                                                class="fa fa-search"></i> Pesquisar</button></span></div>
-                                    </div>
-                                </form>
+
+                                <ValidationObserver v-slot="{ handleSubmit, invalid }">
+                                    <form @submit.prevent="handleSubmit(onSubmit)">
+                                        <div class="col-md-6">
+                                            <ValidationProvider name="by" rules="required"
+                                                                v-slot="{ errors, failed }">
+                                                <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
+                                                    <label for="by">By:</label>
+                                                    <select v-model="by" id="by" name="by" class="form-control">
+                                                        <option value="id" selected="selected">ID</option>
+                                                        <option value="name">Nome</option>
+                                                        <option value="email">E-mail</option>
+                                                        <option value="role">Role</option>
+                                                    </select>
+                                                    <span class="help-block">{{ errors[0] }}</span>
+                                                </div>
+                                            </ValidationProvider>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <ValidationProvider name="Operator" rules="required"
+                                                                v-slot="{ errors, failed }">
+                                                <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
+                                                    <label for="operator">Operator:</label>
+                                                    <select v-model="operator" id="operator" name="operator" class="form-control">
+                                                        <option value="=" selected="selected">Equal</option>
+                                                        <option value="like">Like</option>
+                                                    </select>
+                                                    <span class="help-block">{{ errors[0] }}</span>
+                                                </div>
+                                            </ValidationProvider>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <ValidationProvider name="Keyword" rules="required|min:1|max:100"
+                                                                v-slot="{ errors, failed }">
+                                                <div :class="{'input-group': true,  'has-feedback': true, 'has-error': failed }">
+                                                    <input v-model="keyword" id="keyword" required="required" name="keyword" type="id"
+                                                           class="form-control" im-insert="true"
+                                                           placeholder="Type key word...">
+                                                    <span class="input-group-btn">
+                                                    <button type="submit" class="btn btn-block btn-primary">
+                                                        <i class="fa fa-search"></i> Search</button>
+                                                    </span>
+                                                </div>
+                                                <span class="help-block text-red">{{ errors[0] }}</span>
+                                            </ValidationProvider>
+                                        </div>
+                                    </form>
+                                </ValidationObserver>
+
+
                             </div>
                         </div>
                         <div class="box box-primary">
@@ -190,9 +210,28 @@
 
     import Auth from '../../services/auth'
 
+
+
+    import {extend} from 'vee-validate';
+
+    import * as rules from 'vee-validate/dist/rules';
+    import {messages} from 'vee-validate/dist/locale/pt_BR.json';
+
+    import {ValidationProvider, ValidationObserver} from 'vee-validate';
+
+    Object.keys(rules).forEach(rule => {
+        extend(rule, {
+            ...rules[rule], // copies rule configuration
+            message: messages[rule] // assign message
+        });
+    });
+
     export default {
         data() {
             return {
+                by: '',
+                operator: '',
+                keyword: '',
                 fullPage: true,
                 users: [],
 
@@ -259,7 +298,8 @@
             this.getAll();
         },
         methods: {
-            getAll(){
+
+            getAll() {
                 this.isLoading = true
                 Auth.users(this.currentPage, this.itemsPerPage, this.sortField, this.sort)
                     .then((response) => {
@@ -292,12 +332,6 @@
                     .catch((error) => {
 
                     })
-
-                // const sortedData = orderBy(this.users, [sortField], [sort]);
-                // const start = (this.currentPage - 1) * this.itemsPerPage;
-                // const end = this.currentPage * this.itemsPerPage;
-                // this.data = sortedData.slice(start, end);
-                // console.log("load data based on new sort", this.currentPage);
             },
 
             updateItemsPerPage: function (itemsPerPage) {
@@ -334,11 +368,6 @@
 
                     })
 
-
-                // this.currentPage = currentPage;
-                // const start = (currentPage - 1) * this.itemsPerPage;
-                // const end = currentPage * this.itemsPerPage;
-                // this.data = this.users.slice(start, end);
                 console.log("load data for the new page", currentPage);
             },
 
@@ -349,6 +378,27 @@
             onCancel() {
                 console.log('User cancelled the loader.')
             },
+            byFilter(filter){
+                this.by =  'role'
+                this.operator = '='
+                this.keyword = filter
+                this.onSubmit();
+            },
+            onSubmit() {
+                this.isLoading = true
+                Auth.usersSearch(this.by, this.operator, this.keyword)
+                    .then((response) => {
+                        console.log('Users: ', response)
+                        this.users = response.body.data.data
+                        this.currentPage = response.body.data.meta.pagination.current_page
+                        this.totalItems = response.body.data.meta.pagination.total
+                        this.itemsPerPage = response.body.data.meta.pagination.per_page
+                        this.isLoading = false
+                    })
+                    .catch((error) => {
+
+                    })
+            }
         },
         components: {
             Loading,
@@ -358,7 +408,9 @@
             DataTable,
             ItemsPerPageDropdown,
             Pagination,
-            Spinner
+            Spinner,
+            ValidationProvider,
+            ValidationObserver,
         }
     }
 </script>

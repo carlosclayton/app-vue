@@ -34,5 +34,9 @@ export default class Jwt {
     static getUsers(page, limit, order, sort){
         return Vue.http.get(`users?page=${page}&limit=${limit}&orderBy=${order}&sortedBy=${sort}`);
     }
+
+    static getUsersSearch(by, operator, keyword){
+        return Vue.http.get(`users?search=${keyword}&searchFields=${by}:${operator}`);
+    }
 }
 

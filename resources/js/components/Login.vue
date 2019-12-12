@@ -144,17 +144,13 @@
     export default {
         data() {
             return {
-                email: '',
-                password: '',
                 isLoading: false,
-
                 isConnected: false,
                 name: '',
+                password: '',
                 email: '',
                 FB: undefined,
-
                 fullPage: true,
-
             }
         },
         mounted() {

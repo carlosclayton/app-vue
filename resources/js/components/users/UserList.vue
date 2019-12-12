@@ -199,7 +199,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span></button>
-                        <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> New user</h3>
+                        <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> {{ statusForm }} user</h3>
                     </div>
                     <ValidationObserver v-slot="{ handleSubmit, invalid }">
                         <form id="userForm" @submit.prevent="handleSubmit(onUserSubmit)">
@@ -296,7 +296,7 @@
                 keyword: '',
                 fullPage: true,
                 users: [],
-                statusForm: 'create',
+                statusForm: 'New',
                 name: '',
                 email: '',
                 password: '',
@@ -384,7 +384,7 @@
                 this.id = props.rowData.id;
                 this.name = props.rowData.name;
                 this.email = props.rowData.email;
-                this.statusForm = 'edit';
+                this.statusForm = 'Update';
                 $('#modal-default').modal('show')
             },
 
@@ -474,7 +474,7 @@
             },
             onUserSubmit() {
                 this.isLoading = true
-                if(this.statusForm === 'create'){
+                if(this.statusForm === 'New'){
                     Auth.addUser(this.name, this.email, this.password)
                         .then((response) => {
                             $('#modal-default').modal('hide')

@@ -74,7 +74,9 @@
                                                                                                       name="por"
                                                                                                       class="form-control">
                                             <option value="id" selected="selected">ID</option>
-                                            <option value="nome">Nome</option>
+                                            <option value="name">Nome</option>
+                                            <option value="email">E-mail</option>
+                                            <option value="role">Role</option>
                                             <option value="created_at">Data</option>
                                         </select></div>
                                     </div>
@@ -124,13 +126,14 @@
                                         trackBy="id"
                                 >
                                     <div slot="actions" slot-scope="props">
-                                        <button type="button" class="btn btn-info" @click="dtEditClick(props);">Show
+                                        <button type="button" class="btn btn-info" @click="dtEditClick(props);">
+                                            <i class="fa fa-fw fa-reorder"></i>
                                         </button>
                                         <button type="button" class="btn btn-warning" @click="dtEditClick(props);">
-                                            Edit
+                                            <i class="glyphicon glyphicon-edit"></i>
                                         </button>
                                         <button type="button" class="btn btn-danger" @click="dtEditClick(props);">
-                                            Destroy
+                                            <i class="glyphicon glyphicon-trash"></i>
                                         </button>
                                     </div>
 

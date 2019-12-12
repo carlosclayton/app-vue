@@ -13,8 +13,8 @@ export default {
         return Jwt.getUser()
     },
 
-    users(){
-        return Jwt.getUsers()
+    users(page, limit, order, sort){
+        return Jwt.getUsers(page, limit, order, sort)
     },
     logout(){
         return Jwt.logout()

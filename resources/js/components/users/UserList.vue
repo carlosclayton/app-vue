@@ -1,10 +1,5 @@
 <template>
     <div class="wrapper">
-        <loading :active.sync="isLoading"
-                 :can-cancel="true"
-                 :on-cancel="onCancel"
-                 :is-full-page="fullPage"></loading>
-
         <notifications group="foo" position="bottom right"/>
         <va-navibar></va-navibar>
         <va-slider></va-slider>
@@ -48,14 +43,12 @@
                                 @onUpdate="dtUpdateSort"
                                 trackBy="id"
                         >
-                            <input
-                                    slot="actions"
-                                    slot-scope="props"
-                                    type="button"
-                                    class="btn btn-info"
-                                    value="Editar"
-                                    @click="dtEditClick(props);"
-                            >
+                            <div slot="actions" slot-scope="props">
+                                <button type="button" class="btn btn-info" @click="dtEditClick(props);">Show</button>
+                                <button type="button" class="btn btn-warning" @click="dtEditClick(props);">Edit</button>
+                                <button type="button" class="btn btn-destroy" @click="dtEditClick(props);">Destroy</button>
+                            </div>
+
                             <Pagination
                                     slot="pagination"
                                     :page="currentPage"
@@ -117,12 +110,12 @@
                 users: [],
 
                 isLoading: false,
-                sort: "asc",
-                sortField: "name",
+                sort: "desc",
+                sortField: "id",
                 listItemsPerPage: [5, 10, 20, 50, 100],
                 itemsPerPage: 10,
                 currentPage: 1,
-                totalItems: 16,
+                totalItems: 0,
                 datatableCss: {
                     table: "table table-bordered table-hover table-striped table-center",
                     th: "header-item",
@@ -145,7 +138,6 @@
                     select: "item-per-page-dropdown"
                 },
                 headerFields: [
-                    "__slot:checkboxes",
                     {
                         name: "id",
                         label: "ID",
@@ -171,16 +163,21 @@
                         label: "Data",
                         sortable: true
                     },
-                    "__slot:actions"
+                    "__slot:actions",
                 ]
             }
         },
         mounted() {
             console.log('User component monted')
-            Auth.users()
+            this.isLoading = true
+            Auth.users(this.currentPage, this.itemsPerPage, this.sortField, this.sort)
                 .then((response) => {
                     console.log('Users: ', response)
                     this.users = response.body.data.data
+                    this.currentPage = response.body.data.meta.pagination.current_page
+                    this.totalItems = response.body.data.meta.pagination.total
+                    this.itemsPerPage = response.body.data.meta.pagination.per_page
+                    this.isLoading = false
                 })
                 .catch((error) => {
 
@@ -190,31 +187,68 @@
             dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
 
             dtUpdateSort: function ({sortField, sort}) {
-                const sortedData = orderBy(this.users, [sortField], [sort]);
-                const start = (this.currentPage - 1) * this.itemsPerPage;
-                const end = this.currentPage * this.itemsPerPage;
-                this.data = sortedData.slice(start, end);
-                console.log("load data based on new sort", this.currentPage);
+                this.isLoading = true
+                console.log('New sort: ', sortField + ' ' + sort)
+
+                Auth.users(this.currentPage, this.itemsPerPage, sortField, sort)
+                    .then((response) => {
+                        console.log('Users: ', response)
+                        this.users = response.body.data.data
+                        this.currentPage = response.body.data.meta.pagination.current_page
+                        this.totalItems = response.body.data.meta.pagination.total
+                        this.itemsPerPage = response.body.data.meta.pagination.per_page
+                        this.isLoading = false
+                    })
+                    .catch((error) => {
+
+                    })
+
+                // const sortedData = orderBy(this.users, [sortField], [sort]);
+                // const start = (this.currentPage - 1) * this.itemsPerPage;
+                // const end = this.currentPage * this.itemsPerPage;
+                // this.data = sortedData.slice(start, end);
+                // console.log("load data based on new sort", this.currentPage);
             },
 
             updateItemsPerPage: function (itemsPerPage) {
-
+                this.isLoading = true
                 console.log("Updated list per page: ", itemsPerPage);
+                Auth.users(this.currentPage, itemsPerPage, this.sortField, this.sort)
+                    .then((response) => {
+                        console.log('Users: ', response)
+                        this.users = response.body.data.data
+                        this.currentPage = response.body.data.meta.pagination.current_page
+                        this.totalItems = response.body.data.meta.pagination.total
+                        this.itemsPerPage = response.body.data.meta.pagination.per_page
+                        this.isLoading = false
+                    })
+                    .catch((error) => {
 
-                this.itemsPerPage = itemsPerPage;
-                if (itemsPerPage >= this.users.length) {
-                    this.data = this.users;
-                } else {
-                    this.data = this.users.slice(0, itemsPerPage);
-                }
+                    })
+
 
             },
 
             changePage: function (currentPage) {
-                this.currentPage = currentPage;
-                const start = (currentPage - 1) * this.itemsPerPage;
-                const end = currentPage * this.itemsPerPage;
-                this.data = this.users.slice(start, end);
+                this.isLoading = true
+                Auth.users(currentPage, this.itemsPerPage, this.sortField, this.sort)
+                    .then((response) => {
+                        console.log('Users: ', response)
+                        this.users = response.body.data.data
+                        this.currentPage = response.body.data.meta.pagination.current_page
+                        this.totalItems = response.body.data.meta.pagination.total
+                        this.itemsPerPage = response.body.data.meta.pagination.per_page
+                        this.isLoading = false
+                    })
+                    .catch((error) => {
+
+                    })
+
+
+                // this.currentPage = currentPage;
+                // const start = (currentPage - 1) * this.itemsPerPage;
+                // const end = currentPage * this.itemsPerPage;
+                // this.data = this.users.slice(start, end);
                 console.log("load data for the new page", currentPage);
             },
 
@@ -241,6 +275,18 @@
 
 
 <style>
+    #app {
+        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 60px;
+    }
+
+    #app .title {
+        margin-bottom: 30px;
+    }
 
     #app .items-per-page {
         height: 100%;
@@ -327,11 +373,7 @@
     /* End Datatable CSS */
 
     /* Pagination CSS */
-    .css {
-
-    }
-
-    ul #v-datatable-light-pagination {
+    #v-datatable-light-pagination {
         list-style: none;
         display: flex;
         align-items: center;
@@ -374,7 +416,6 @@
     /* END PAGINATION CSS */
 
     /* ITEMS PER PAGE DROPDOWN CSS */
-
     .item-per-page-dropdown {
         background-color: transparent;
         min-height: 30px;
@@ -386,8 +427,4 @@
     .item-per-page-dropdown:hover {
         cursor: pointer;
     }
-
-    /* END ITEMS PER PAGE DROPDOWN CSS */
-
-
 </style>

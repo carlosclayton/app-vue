@@ -31,8 +31,8 @@ export default class Jwt {
         })
     }
 
-    static getUsers(){
-        return Vue.http.get('users');
+    static getUsers(page, limit, order, sort){
+        return Vue.http.get(`users?page=${page}&limit=${limit}&orderBy=${order}&sortedBy=${sort}`);
     }
 }
 

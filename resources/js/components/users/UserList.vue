@@ -6,77 +6,161 @@
         <div id="content-wrap" class="content-wrapper">
             <section class="content-header">
                 <h1>
-                    Blank page
-                    <small>it all starts here</small>
+                    Users
+                    <small>manager all users</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Examples</a></li>
-                    <li class="active">Blank page</li>
+                    <li><a href="#">Users</a></li>
+                    <li class="active">All</li>
                 </ol>
             </section>
             <section class="content">
-
-                <!-- Default box -->
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Title</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="" data-original-title="Collapse">
-                                <i class="fa fa-minus"></i></button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
-                                    title="" data-original-title="Remove">
-                                <i class="fa fa-times"></i></button>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="https://pgenet.pge.ap.gov.br/banks/create"
+                           class="btn btn-primary btn-block margin-bottom btn-lg"><span
+                                class="glyphicon glyphicon-plus"></span> Add </a>
+                        <div class="box box-primary">
+                            <div class="box-header with-border"><h3 class="box-title"><span
+                                    class="glyphicon glyphicon-cog"></span> Access </h3>
+                                <div class="box-tools">
+                                    <button type="button" data-widget="collapse" class="btn btn-box-tool"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body no-padding">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li class="active"><a href="#"><i
+                                            class="fa fa-fw fa-list-ul"></i> Users
+                                    </a></li>
+                                    <li><a href="#"><i
+                                            class="fa fa-trash-o"></i> Trash
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="box box-primary">
+                            <div class="box-header with-border"><h3 class="box-title"><span
+                                    class="glyphicon glyphicon-tasks"></span> Filters</h3>
+                                <div class="box-tools">
+                                    <button type="button" data-widget="collapse" class="btn btn-box-tool"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body no-padding">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="#"><i class="fa fa-circle-o text-blue"></i> Clients</a></li>
+                                    <li><a href="#"><i class="fa fa-circle-o text-green"></i> Admin</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="box-body" style="">
-                        <DataTable
-                                :header-fields="headerFields"
-                                :sort-field="sortField"
-                                :sort="sort"
-                                :data="users || []"
-                                :is-loading="isLoading"
-                                :css="datatableCss"
-                                not-found-msg="Items not found"
-                                @onUpdate="dtUpdateSort"
-                                trackBy="id"
-                        >
-                            <div slot="actions" slot-scope="props">
-                                <button type="button" class="btn btn-info" @click="dtEditClick(props);">Show</button>
-                                <button type="button" class="btn btn-warning" @click="dtEditClick(props);">Edit</button>
-                                <button type="button" class="btn btn-destroy" @click="dtEditClick(props);">Destroy</button>
+                    <div class="col-md-9">
+                        <div class="box box-primary">
+                            <div class="box-header with-border"><h3 class="box-title"><span
+                                    class="glyphicon glyphicon-search"></span> Pesquisa</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" data-widget="collapse" class="btn btn-box-tool"><i
+                                            class="fa fa-minus"></i></button>
+                                </div>
                             </div>
-
-                            <Pagination
-                                    slot="pagination"
-                                    :page="currentPage"
-                                    :total-items="totalItems"
-                                    :items-per-page="itemsPerPage"
-                                    :css="paginationCss"
-                                    @onUpdate="changePage"
-                                    @updateCurrentPage="updateCurrentPage"
-                            />
-                            <div class="items-per-page" slot="ItemsPerPage">
-                                <label>Items per page</label>
-                                <ItemsPerPageDropdown
-                                        :list-items-per-page="listItemsPerPage"
-                                        :items-per-page="itemsPerPage"
-                                        :css="itemsPerPageCss"
-                                        @onUpdate="updateItemsPerPage"
-                                />
+                            <div class="box-body">
+                                <form method="POST" action="#"
+                                      accept-charset="UTF-8"><input name="_token" type="hidden"
+                                                                    value="mosIy5zXRKML8CMgmrYO8s0hD3mkGyod2tKoBIvN">
+                                    <div class="col-md-6">
+                                        <div class="form-group"><label for="por">Por:</label> <select id="por"
+                                                                                                      name="por"
+                                                                                                      class="form-control">
+                                            <option value="id" selected="selected">ID</option>
+                                            <option value="nome">Nome</option>
+                                            <option value="created_at">Data</option>
+                                        </select></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group"><label for="operador">Operador:</label> <select
+                                                id="operador" name="operador" class="form-control">
+                                            <option value="=" selected="selected">Igual a</option>
+                                            <option value="<>">Diferente de</option>
+                                            <option value="like">Contém a</option>
+                                            <option value=">=">Maior que</option>
+                                            <option value="<=">Menor que</option>
+                                        </select></div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="input-group"><input id="search" required="required" name="palavra"
+                                                                        type="id" class="form-control" im-insert="true"
+                                                                        placeholder="Palavra-chave..."> <span
+                                                class="input-group-btn"><button type="submit"
+                                                                                class="btn btn-block btn-primary"><i
+                                                class="fa fa-search"></i> Pesquisar</button></span></div>
+                                    </div>
+                                </form>
                             </div>
-                            <Spinner slot="spinner"/>
-                        </DataTable>
+                        </div>
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                                <h3 class="box-title">Users</h3>
 
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"
+                                            data-toggle="tooltip"
+                                            title="" data-original-title="Collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body" style="">
+                                <DataTable
+                                        :header-fields="headerFields"
+                                        :sort-field="sortField"
+                                        :sort="sort"
+                                        :data="users || []"
+                                        :is-loading="isLoading"
+                                        :css="datatableCss"
+                                        not-found-msg="Items not found"
+                                        @onUpdate="dtUpdateSort"
+                                        trackBy="id"
+                                >
+                                    <div slot="actions" slot-scope="props">
+                                        <button type="button" class="btn btn-info" @click="dtEditClick(props);">Show
+                                        </button>
+                                        <button type="button" class="btn btn-warning" @click="dtEditClick(props);">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-danger" @click="dtEditClick(props);">
+                                            Destroy
+                                        </button>
+                                    </div>
+
+                                    <Pagination
+                                            slot="pagination"
+                                            :page="currentPage"
+                                            :total-items="totalItems"
+                                            :items-per-page="itemsPerPage"
+                                            :css="paginationCss"
+                                            @onUpdate="changePage"
+                                            @updateCurrentPage="updateCurrentPage"
+                                    />
+                                    <div class="items-per-page" slot="ItemsPerPage">
+                                        <label>Items per page</label>
+                                        <ItemsPerPageDropdown
+                                                :list-items-per-page="listItemsPerPage"
+                                                :items-per-page="itemsPerPage"
+                                                :css="itemsPerPageCss"
+                                                @onUpdate="updateItemsPerPage"
+                                        />
+                                    </div>
+                                    <Spinner slot="spinner"/>
+                                </DataTable>
+
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer" style="">
-                    </div>
-                    <!-- /.box-footer-->
                 </div>
-                <!-- /.box -->
+
+
             </section>
         </div>
         <va-footer></va-footer>
@@ -117,7 +201,7 @@
                 currentPage: 1,
                 totalItems: 0,
                 datatableCss: {
-                    table: "table table-bordered table-hover table-striped table-center",
+                    table: "table table-condensed table-hover table-striped",
                     th: "header-item",
                     thWrapper: "th-wrapper",
                     thWrapperCheckboxes: "th-wrapper checkboxes",
@@ -275,18 +359,7 @@
 
 
 <style>
-    #app {
-        font-family: "Avenir", Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
 
-    #app .title {
-        margin-bottom: 30px;
-    }
 
     #app .items-per-page {
         height: 100%;

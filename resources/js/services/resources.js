@@ -31,6 +31,24 @@ export default class Jwt {
         })
     }
 
+    static addUser(name, email, password){
+        return Vue.http.post('users', {
+            name: name,
+            email: email,
+            password: password,
+            role: 2
+        })
+    }
+
+    static updateUser(id, name, email, password){
+        return Vue.http.put(`users/${id}`, {
+            name: name,
+            email: email,
+            password: password,
+            role: 2
+        })
+    }
+
     static getUsers(page, limit, order, sort){
         return Vue.http.get(`users?page=${page}&limit=${limit}&orderBy=${order}&sortedBy=${sort}`);
     }

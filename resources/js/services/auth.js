@@ -33,13 +33,22 @@ export default {
         return Jwt.forgot(email);
     },
 
-    register(name, email, password ){
-        return Jwt.register(name, email, password)
+    register(id, name, email, password ){
+        return Jwt.register(id, name, email, password)
             .then((response) => {
                 localStorage.set('token', response.body.token)
                 return response
             })
+    },
+
+    addUser(name, email, password ){
+        return Jwt.addUser(name, email, password)
+    },
+
+    updateUser(name, email, password ){
+        return Jwt.updateUser(name, email, password)
     }
+
 }
 
 

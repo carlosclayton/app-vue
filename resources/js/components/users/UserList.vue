@@ -18,9 +18,10 @@
             <section class="content">
                 <div class="row">
                     <div class="col-md-3">
-                        <!--<a href="#"-->
-                           <!--class="btn btn-primary btn-block margin-bottom btn-lg"><span-->
-                                <!--class="glyphicon glyphicon-plus"></span> Add </a>-->
+                        <button type="button" class="btn btn-primary btn-block margin-bottom btn-lg" data-toggle="modal"
+                                data-target="#modal-default">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
                         <div class="box box-primary">
                             <div class="box-header with-border"><h3 class="box-title"><span
                                     class="glyphicon glyphicon-cog"></span> Access </h3>
@@ -35,7 +36,7 @@
                                             class="fa fa-fw fa-list-ul"></i> Users
                                     </a></li>
                                     <!--<li><a href="#"><i-->
-                                            <!--class="fa fa-trash-o"></i> Trash-->
+                                    <!--class="fa fa-trash-o"></i> Trash-->
                                     <!--</a></li>-->
                                 </ul>
                             </div>
@@ -51,8 +52,10 @@
                             </div>
                             <div class="box-body no-padding">
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#" @click="byFilter(2)"><i class="fa fa-circle-o text-blue"></i> Clients</a></li>
-                                    <li><a href="#" @click="byFilter(1)"><i class="fa fa-circle-o text-green"></i> Admin</a></li>
+                                    <li><a href="#" @click="byFilter(2)"><i class="fa fa-circle-o text-blue"></i>
+                                        Clients</a></li>
+                                    <li><a href="#" @click="byFilter(1)"><i class="fa fa-circle-o text-green"></i> Admin</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -91,7 +94,8 @@
                                                                 v-slot="{ errors, failed }">
                                                 <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
                                                     <label for="operator">Operator:</label>
-                                                    <select v-model="operator" id="operator" name="operator" class="form-control">
+                                                    <select v-model="operator" id="operator" name="operator"
+                                                            class="form-control">
                                                         <option value="=" selected="selected">Equal</option>
                                                         <option value="like">Like</option>
                                                     </select>
@@ -104,7 +108,8 @@
                                             <ValidationProvider name="Keyword" rules="required|min:1|max:100"
                                                                 v-slot="{ errors, failed }">
                                                 <div :class="{'input-group': true,  'has-feedback': true, 'has-error': failed }">
-                                                    <input v-model="keyword" id="keyword" required="required" name="keyword" type="id"
+                                                    <input v-model="keyword" id="keyword" required="required"
+                                                           name="keyword" type="id"
                                                            class="form-control" im-insert="true"
                                                            placeholder="Type key word...">
                                                     <span class="input-group-btn">
@@ -187,12 +192,70 @@
             </section>
         </div>
         <va-footer></va-footer>
+
+        <div class="modal fade" id="modal-default" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                        <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> New user</h3>
+                    </div>
+                    <ValidationObserver v-slot="{ handleSubmit, invalid }">
+                        <form id="userForm" @submit.prevent="handleSubmit(onUserSubmit)">
+                            <div class="modal-body">
+                                <ValidationProvider name="Name" rules="required|min:3|max:100"
+                                                    v-slot="{ errors, failed }">
+                                    <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
+                                        <input v-model="name" type="text" class="form-control">
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                        <span class="help-block">{{ errors[0] }}</span>
+                                    </div>
+                                </ValidationProvider>
+
+
+                                <ValidationProvider name="Email" rules="required|min:3|email|max:100"
+                                                    v-slot="{ errors, failed }">
+                                    <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
+                                        <input v-model="email" type="email" class="form-control">
+                                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                        <span class="help-block">{{ errors[0] }}</span>
+                                    </div>
+                                </ValidationProvider>
+
+
+                                <ValidationProvider name="Password" rules="required|min:3|max:100"
+                                                    v-slot="{ errors, failed }">
+                                    <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
+                                        <input v-model="password" type="password" class="form-control">
+                                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                        <span class="help-block">{{ errors[0] }}</span>
+                                    </div>
+                                </ValidationProvider>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" :disabled="invalid" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </ValidationObserver>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     </div>
 
 </template>
 
 <script>
-    import Vue from 'vue'
+    import Vue from 'vue';
+    import VueToast from 'vue-toast-notification';
+    import 'vue-toast-notification/dist/index.css';
+    Vue.use(VueToast);
+
     import Notifications from 'vue-notification'
     import velocity from 'velocity-animate'
     import VAFooter from '../Footer.vue'
@@ -209,7 +272,6 @@
     import orderBy from "lodash.orderby";
 
     import Auth from '../../services/auth'
-
 
 
     import {extend} from 'vee-validate';
@@ -234,6 +296,10 @@
                 keyword: '',
                 fullPage: true,
                 users: [],
+                statusForm: 'create',
+                name: '',
+                email: '',
+                password: '',
 
                 isLoading: false,
                 sort: "desc",
@@ -314,7 +380,13 @@
 
                     })
             },
-            dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
+            dtEditClick(props) {
+                this.id = props.rowData.id;
+                this.name = props.rowData.name;
+                this.email = props.rowData.email;
+                this.statusForm = 'edit';
+                $('#modal-default').modal('show')
+            },
 
             dtUpdateSort: function ({sortField, sort}) {
                 this.isLoading = true
@@ -378,12 +450,13 @@
             onCancel() {
                 console.log('User cancelled the loader.')
             },
-            byFilter(filter){
-                this.by =  'role'
+            byFilter(filter) {
+                this.by = 'role'
                 this.operator = '='
                 this.keyword = filter
                 this.onSubmit();
             },
+
             onSubmit() {
                 this.isLoading = true
                 Auth.usersSearch(this.by, this.operator, this.keyword)
@@ -398,6 +471,55 @@
                     .catch((error) => {
 
                     })
+            },
+            onUserSubmit() {
+                this.isLoading = true
+                if(this.statusForm === 'create'){
+                    Auth.addUser(this.name, this.email, this.password)
+                        .then((response) => {
+                            $('#modal-default').modal('hide')
+                            this.getAll()
+                            this.isLoading = false
+                            Vue.$toast.open({
+                                type: 'success',
+                                message: response.body.message,
+                                position: 'bottom',
+                                duration: 5000
+                            })
+                        })
+                        .catch((error) => {
+                            Vue.$toast.open({
+                                type: 'error',
+                                message: response.body.errors.message,
+                                position: 'bottom',
+                                duration: 5000
+                            })
+                        })
+                }else{
+                    console.log('Atualizando...')
+                    Auth.updateUser(this.id, this.name, this.email, this.password)
+                        .then((response) => {
+                            $('#modal-default').modal('hide')
+                            this.getAll()
+                            this.isLoading = false
+                            Vue.$toast.open({
+                                type: 'success',
+                                message: response.body.data,
+                                position: 'bottom',
+                                duration: 5000
+                            })
+                        })
+                        .catch((error) => {
+                            Vue.$toast.open({
+                                type: 'error',
+                                message: response.body.errors.message,
+                                position: 'bottom',
+                                duration: 5000
+                            })
+                        })
+                }
+
+
             }
         },
         components: {

@@ -162,9 +162,9 @@
                                         <button type="button" class="btn btn-warning" @click="dtEditClick(props);">
                                             <i class="glyphicon glyphicon-edit"></i>
                                         </button>
-                                        <!--<button type="button" class="btn btn-danger" @click="dtDestroyClick(props);">-->
-                                            <!--<i class="glyphicon glyphicon-trash"></i>-->
-                                        <!--</button>-->
+                                        <button type="button" class="btn btn-danger" @click="dtDestroyClick(props);">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </button>
                                     </div>
 
                                     <Pagination

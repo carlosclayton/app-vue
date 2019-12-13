@@ -248,9 +248,7 @@
                         </form>
                     </ValidationObserver>
                 </div>
-                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-dialog -->
         </div>
 
 
@@ -294,6 +292,7 @@
     import Vue from 'vue';
     import VueToast from 'vue-toast-notification';
     import 'vue-toast-notification/dist/index.css';
+
     Vue.use(VueToast);
 
     import Simplert from 'vue2-simplert';
@@ -314,8 +313,8 @@
     import orderBy from "lodash.orderby";
 
     import Auth from '../../services/auth'
-    import {extend} from 'vee-validate';
 
+    import {extend} from 'vee-validate';
     import * as rules from 'vee-validate/dist/rules';
     import {messages} from 'vee-validate/dist/locale/pt_BR.json';
 
@@ -327,7 +326,6 @@
             message: messages[rule] // assign message
         });
     });
-
 
 
     export default {
@@ -591,7 +589,7 @@
                 this.id = props.rowData.id;
 
                 let obj = {
-                    title: 'Remove ' + props.rowData.name ,
+                    title: 'Remove ' + props.rowData.name,
                     message: 'Are you sure?',
                     type: 'error',
                     useConfirmBtn: true,

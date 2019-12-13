@@ -97,7 +97,6 @@
     Vue.use(VueToast);
 
     import Gravatar from 'vue-gravatar';
-
     Vue.component('v-gravatar', Gravatar);
 
     import Simplert from 'vue2-simplert';

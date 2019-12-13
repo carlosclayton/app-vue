@@ -156,15 +156,15 @@
                                         trackBy="id"
                                 >
                                     <div slot="actions" slot-scope="props">
-                                        <button type="button" class="btn btn-info" @click="dtShowClick(props);">
-                                            <i class="fa fa-fw fa-reorder"></i>
-                                        </button>
+                                        <!--<button type="button" class="btn btn-info" @click="dtShowClick(props);">-->
+                                            <!--<i class="fa fa-fw fa-reorder"></i>-->
+                                        <!--</button>-->
                                         <button type="button" class="btn btn-warning" @click="dtEditClick(props);">
                                             <i class="glyphicon glyphicon-edit"></i>
                                         </button>
-                                        <button type="button" class="btn btn-danger" @click="dtDestroyClick(props);">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </button>
+                                        <!--<button type="button" class="btn btn-danger" @click="dtDestroyClick(props);">-->
+                                            <!--<i class="glyphicon glyphicon-trash"></i>-->
+                                        <!--</button>-->
                                     </div>
 
                                     <Pagination
@@ -198,92 +198,92 @@
         </div>
         <va-footer></va-footer>
 
-        <div class="modal fade" id="modal-default" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span></button>
-                        <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> {{ statusForm }} user
-                        </h3>
-                    </div>
-                    <ValidationObserver v-slot="{ handleSubmit, invalid }">
-                        <form id="userForm" @submit.prevent="handleSubmit(onUserSubmit)">
-                            <div class="modal-body">
-                                <ValidationProvider name="Name" rules="required|min:3|max:100"
-                                                    v-slot="{ errors, failed }">
-                                    <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
-                                        <input v-model="name" type="text" class="form-control">
-                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                        <span class="help-block">{{ errors[0] }}</span>
-                                    </div>
-                                </ValidationProvider>
+        <!--<div class="modal fade" id="modal-default" style="display: none;">-->
+            <!--<div class="modal-dialog">-->
+                <!--<div class="modal-content">-->
+                    <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                            <!--<span aria-hidden="true">×</span></button>-->
+                        <!--<h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> {{ statusForm }} user-->
+                        <!--</h3>-->
+                    <!--</div>-->
+                    <!--<ValidationObserver v-slot="{ handleSubmit, invalid }">-->
+                        <!--<form id="userForm" @submit.prevent="handleSubmit(onUserSubmit)">-->
+                            <!--<div class="modal-body">-->
+                                <!--<ValidationProvider name="Name" rules="required|min:3|max:100"-->
+                                                    <!--v-slot="{ errors, failed }">-->
+                                    <!--<div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">-->
+                                        <!--<input v-model="name" type="text" class="form-control">-->
+                                        <!--<span class="glyphicon glyphicon-user form-control-feedback"></span>-->
+                                        <!--<span class="help-block">{{ errors[0] }}</span>-->
+                                    <!--</div>-->
+                                <!--</ValidationProvider>-->
 
 
-                                <ValidationProvider name="Email" rules="required|min:3|email|max:100"
-                                                    v-slot="{ errors, failed }">
-                                    <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
-                                        <input v-model="email" type="email" class="form-control">
-                                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                                        <span class="help-block">{{ errors[0] }}</span>
-                                    </div>
-                                </ValidationProvider>
+                                <!--<ValidationProvider name="Email" rules="required|min:3|email|max:100"-->
+                                                    <!--v-slot="{ errors, failed }">-->
+                                    <!--<div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">-->
+                                        <!--<input v-model="email" type="email" class="form-control">-->
+                                        <!--<span class="glyphicon glyphicon-envelope form-control-feedback"></span>-->
+                                        <!--<span class="help-block">{{ errors[0] }}</span>-->
+                                    <!--</div>-->
+                                <!--</ValidationProvider>-->
 
 
-                                <ValidationProvider name="Password" rules="required|min:3|max:100"
-                                                    v-slot="{ errors, failed }">
-                                    <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
-                                        <input v-model="password" type="password" class="form-control">
-                                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                                        <span class="help-block">{{ errors[0] }}</span>
-                                    </div>
-                                </ValidationProvider>
+                                <!--<ValidationProvider name="Password" rules="required|min:3|max:100"-->
+                                                    <!--v-slot="{ errors, failed }">-->
+                                    <!--<div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">-->
+                                        <!--<input v-model="password" type="password" class="form-control">-->
+                                        <!--<span class="glyphicon glyphicon-lock form-control-feedback"></span>-->
+                                        <!--<span class="help-block">{{ errors[0] }}</span>-->
+                                    <!--</div>-->
+                                <!--</ValidationProvider>-->
 
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" :disabled="invalid" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </ValidationObserver>
-                </div>
-            </div>
-        </div>
+                            <!--</div>-->
+                            <!--<div class="modal-footer">-->
+                                <!--<button type="submit" :disabled="invalid" class="btn btn-primary">Save</button>-->
+                                <!--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</ValidationObserver>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <user-add></user-add>
+        <user-edit :user="user"></user-edit>
+        <!--<div class="modal fade" id="modal-show" style="display: none;">-->
+            <!--<div class="modal-dialog">-->
+                <!--<div class="modal-content">-->
+                    <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                            <!--<span aria-hidden="true">×</span></button>-->
+                        <!--<h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> Show user</h3>-->
+                    <!--</div>-->
 
+                    <!--<div class="modal-body">-->
+                        <!--<table class="table table-condensed">-->
+                            <!--<tbody>-->
+                            <!--<tr>-->
+                                <!--<th style="width: 10px">Nome:</th>-->
+                                <!--<th>{{ name }}</th>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>Email:</td>-->
+                                <!--<td>{{ email }}</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
 
-        <div class="modal fade" id="modal-show" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span></button>
-                        <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> Show user</h3>
-                    </div>
-
-                    <div class="modal-body">
-                        <table class="table table-condensed">
-                            <tbody>
-                            <tr>
-                                <th style="width: 10px">Nome:</th>
-                                <th>{{ name }}</th>
-                            </tr>
-                            <tr>
-                                <td>Email:</td>
-                                <td>{{ email }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
+                    <!--<div class="modal-footer">-->
+                        <!--<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.modal-content &ndash;&gt;-->
+            <!--</div>-->
+            <!--&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+        <!--</div>-->
     </div>
 
 </template>
@@ -327,6 +327,9 @@
         });
     });
 
+    import AddUser from '../../components/users/Add'
+    import EditUser from '../../components/users/Edit'
+    import eventBus from '../../services/eventbus'
 
     export default {
         data() {
@@ -337,10 +340,13 @@
                 fullPage: true,
                 users: [],
                 statusForm: 'New',
-                name: '',
-                email: '',
-                password: '',
 
+                user: {
+                    id: '',
+                    name: '',
+                    email: '',
+                    password: '',
+                },
                 isLoading: false,
                 sort: "desc",
                 sortField: "id",
@@ -402,9 +408,12 @@
         mounted() {
             console.log('User component monted')
             this.getAll();
+
+            eventBus.$on('getAllUsers', () => {
+                this.getAll()
+            })
         },
         methods: {
-
             getAll() {
                 this.isLoading = true
                 Auth.users(this.currentPage, this.itemsPerPage, this.sortField, this.sort)
@@ -421,11 +430,13 @@
                     })
             },
             dtEditClick(props) {
-                this.id = props.rowData.id;
-                this.name = props.rowData.name;
-                this.email = props.rowData.email;
-                this.statusForm = 'Update';
-                $('#modal-default').modal('show')
+                this.user = {
+                    'id': props.rowData.id,
+                    'name': props.rowData.name,
+                    'email': props.rowData.email,
+                    'password': props.rowData.password
+                }
+                $('#modal-edit-user').modal('show')
             },
             dtShowClick(props) {
                 this.id = props.rowData.id;
@@ -517,53 +528,53 @@
 
                     })
             },
-            onUserSubmit() {
-                this.isLoading = true
-                if (this.statusForm === 'New') {
-                    Auth.addUser(this.name, this.email, this.password)
-                        .then((response) => {
-                            $('#modal-default').modal('hide')
-                            this.getAll()
-                            this.isLoading = false
-                            Vue.$toast.open({
-                                type: 'success',
-                                message: response.body.message,
-                                position: 'bottom',
-                                duration: 5000
-                            })
-                        })
-                        .catch((error) => {
-                            Vue.$toast.open({
-                                type: 'error',
-                                message: response.body.errors.message,
-                                position: 'bottom',
-                                duration: 5000
-                            })
-                        })
-                } else {
-                    console.log('Atualizando...')
-                    Auth.updateUser(this.id, this.name, this.email, this.password)
-                        .then((response) => {
-                            $('#modal-default').modal('hide')
-                            this.getAll()
-                            this.isLoading = false
-                            Vue.$toast.open({
-                                type: 'success',
-                                message: response.body.data,
-                                position: 'bottom',
-                                duration: 5000
-                            })
-                        })
-                        .catch((error) => {
-                            Vue.$toast.open({
-                                type: 'error',
-                                message: response.body.errors.message,
-                                position: 'bottom',
-                                duration: 5000
-                            })
-                        })
-                }
-            },
+            // onUserSubmit() {
+            //     this.isLoading = true
+            //     if (this.statusForm === 'New') {
+            //         Auth.addUser(this.name, this.email, this.password)
+            //             .then((response) => {
+            //                 $('#modal-default').modal('hide')
+            //                 this.getAll()
+            //                 this.isLoading = false
+            //                 Vue.$toast.open({
+            //                     type: 'success',
+            //                     message: response.body.message,
+            //                     position: 'bottom',
+            //                     duration: 5000
+            //                 })
+            //             })
+            //             .catch((error) => {
+            //                 Vue.$toast.open({
+            //                     type: 'error',
+            //                     message: response.body.errors.message,
+            //                     position: 'bottom',
+            //                     duration: 5000
+            //                 })
+            //             })
+            //     } else {
+            //         console.log('Atualizando...')
+            //         Auth.updateUser(this.id, this.name, this.email, this.password)
+            //             .then((response) => {
+            //                 $('#modal-default').modal('hide')
+            //                 this.getAll()
+            //                 this.isLoading = false
+            //                 Vue.$toast.open({
+            //                     type: 'success',
+            //                     message: response.body.data,
+            //                     position: 'bottom',
+            //                     duration: 5000
+            //                 })
+            //             })
+            //             .catch((error) => {
+            //                 Vue.$toast.open({
+            //                     type: 'error',
+            //                     message: response.body.errors.message,
+            //                     position: 'bottom',
+            //                     duration: 5000
+            //                 })
+            //             })
+            //     }
+            // },
             destroy() {
                 Auth.destroyUser(this.id)
                     .then((response) => {
@@ -615,7 +626,8 @@
             Spinner,
             ValidationProvider,
             ValidationObserver,
-
+            'user-add': AddUser,
+            'user-edit': EditUser
         }
     }
 </script>

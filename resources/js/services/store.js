@@ -11,7 +11,6 @@ export default new Vuex.Store({
     },
     mutations: {
         loginStart: state => state.loggingIn = true,
-
         loginStop: (state, errorMessage) => {
             state.loggingIn = false;
             state.loginError = errorMessage;

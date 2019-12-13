@@ -1,11 +1,11 @@
 <template>
-    <div class="modal fade" id="modal-default" style="display: none;">
+    <div class="modal fade" id="modal-edit-user" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span></button>
-                    <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> New user
+                    <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> Update user
                     </h3>
                 </div>
                 <ValidationObserver v-slot="{ handleSubmit, invalid }">
@@ -14,7 +14,7 @@
                             <ValidationProvider name="Name" rules="required|min:3|max:100"
                                                 v-slot="{ errors, failed }">
                                 <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
-                                    <input v-model="name" type="text" class="form-control">
+                                    <input v-model="user.name" type="text" class="form-control">
                                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                     <span class="help-block">{{ errors[0] }}</span>
                                 </div>
@@ -24,7 +24,7 @@
                             <ValidationProvider name="Email" rules="required|min:3|email|max:100"
                                                 v-slot="{ errors, failed }">
                                 <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
-                                    <input v-model="email" type="email" class="form-control">
+                                    <input v-model="user.email" type="email" class="form-control">
                                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                                     <span class="help-block">{{ errors[0] }}</span>
                                 </div>
@@ -34,7 +34,7 @@
                             <ValidationProvider name="Password" rules="required|min:3|max:100"
                                                 v-slot="{ errors, failed }">
                                 <div :class="{'form-group': true,  'has-feedback': true, 'has-error': failed }">
-                                    <input v-model="password" type="password" class="form-control">
+                                    <input v-model="user.password" type="password" class="form-control">
                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                                     <span class="help-block">{{ errors[0] }}</span>
                                 </div>
@@ -43,7 +43,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" :disabled="invalid" class="btn btn-primary">Save</button>
+                            <button type="submit" :disabled="invalid" class="btn btn-primary">Update</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -81,26 +81,28 @@
     export default {
         data() {
             return {
-                name: '',
-                email: '',
-                password: '',
                 isLoading: false
             }
         },
+        props: {
+            user: Object
+        },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted to: ' + this.user)
+
         },
         methods: {
             onUserSubmit() {
+                console.log('New user: ', this.user)
                 this.isLoading = true
-                Auth.addUser(this.name, this.email, this.password)
+                Auth.updateUser(this.user.id, this.user.name, this.user.email, this.user.password)
                     .then((response) => {
-                        $('#modal-default').modal('hide')
+                        $('#modal-edit-user').modal('hide')
                         eventBus.$emit('getAllUsers')
                         this.isLoading = false
                         Vue.$toast.open({
                             type: 'success',
-                            message: response.body.message,
+                            message: response.body.data,
                             position: 'bottom',
                             duration: 5000
                         })

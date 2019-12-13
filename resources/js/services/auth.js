@@ -47,6 +47,10 @@ export default {
 
     updateUser(name, email, password ){
         return Jwt.updateUser(name, email, password)
+    },
+
+    destroyUser(id){
+        return Jwt.destroyUser(id)
     }
 
 }

@@ -1,5 +1,10 @@
 <template>
     <div class="wrapper">
+        <simplert :useRadius="true"
+                  :useIcon="true"
+                  ref="simplert">
+        </simplert>
+
         <notifications group="foo" position="bottom right"/>
         <va-navibar></va-navibar>
         <va-slider></va-slider>
@@ -151,13 +156,13 @@
                                         trackBy="id"
                                 >
                                     <div slot="actions" slot-scope="props">
-                                        <button type="button" class="btn btn-info" @click="dtEditClick(props);">
+                                        <button type="button" class="btn btn-info" @click="dtShowClick(props);">
                                             <i class="fa fa-fw fa-reorder"></i>
                                         </button>
                                         <button type="button" class="btn btn-warning" @click="dtEditClick(props);">
                                             <i class="glyphicon glyphicon-edit"></i>
                                         </button>
-                                        <button type="button" class="btn btn-danger" @click="dtEditClick(props);">
+                                        <button type="button" class="btn btn-danger" @click="dtDestroyClick(props);">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </button>
                                     </div>
@@ -199,7 +204,8 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span></button>
-                        <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> {{ statusForm }} user</h3>
+                        <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> {{ statusForm }} user
+                        </h3>
                     </div>
                     <ValidationObserver v-slot="{ handleSubmit, invalid }">
                         <form id="userForm" @submit.prevent="handleSubmit(onUserSubmit)">
@@ -246,6 +252,40 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
+
+
+        <div class="modal fade" id="modal-show" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                        <h3 class="modal-title"><span class="glyphicon glyphicon-user"></span> Show user</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <table class="table table-condensed">
+                            <tbody>
+                            <tr>
+                                <th style="width: 10px">Nome:</th>
+                                <th>{{ name }}</th>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>{{ email }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     </div>
 
 </template>
@@ -255,6 +295,8 @@
     import VueToast from 'vue-toast-notification';
     import 'vue-toast-notification/dist/index.css';
     Vue.use(VueToast);
+
+    import Simplert from 'vue2-simplert';
 
     import Notifications from 'vue-notification'
     import velocity from 'velocity-animate'
@@ -272,8 +314,6 @@
     import orderBy from "lodash.orderby";
 
     import Auth from '../../services/auth'
-
-
     import {extend} from 'vee-validate';
 
     import * as rules from 'vee-validate/dist/rules';
@@ -287,6 +327,8 @@
             message: messages[rule] // assign message
         });
     });
+
+
 
     export default {
         data() {
@@ -387,7 +429,12 @@
                 this.statusForm = 'Update';
                 $('#modal-default').modal('show')
             },
-
+            dtShowClick(props) {
+                this.id = props.rowData.id;
+                this.name = props.rowData.name;
+                this.email = props.rowData.email;
+                $('#modal-show').modal('show')
+            },
             dtUpdateSort: function ({sortField, sort}) {
                 this.isLoading = true
                 console.log('New sort: ', sortField + ' ' + sort)
@@ -474,7 +521,7 @@
             },
             onUserSubmit() {
                 this.isLoading = true
-                if(this.statusForm === 'New'){
+                if (this.statusForm === 'New') {
                     Auth.addUser(this.name, this.email, this.password)
                         .then((response) => {
                             $('#modal-default').modal('hide')
@@ -495,7 +542,7 @@
                                 duration: 5000
                             })
                         })
-                }else{
+                } else {
                     console.log('Atualizando...')
                     Auth.updateUser(this.id, this.name, this.email, this.password)
                         .then((response) => {
@@ -518,11 +565,48 @@
                             })
                         })
                 }
+            },
+            destroy() {
+                Auth.destroyUser(this.id)
+                    .then((response) => {
+                        this.getAll()
+                        Vue.$toast.open({
+                            type: 'success',
+                            message: response.body.message,
+                            position: 'bottom',
+                            duration: 5000
+                        })
+                    })
+                    .catch((response) => {
+                        Vue.$toast.open({
+                            type: 'error',
+                            message: response.body.message,
+                            position: 'bottom',
+                            duration: 5000
+                        })
+                    })
 
+            },
+            dtDestroyClick(props) {
+                this.id = props.rowData.id;
+
+                let obj = {
+                    title: 'Remove ' + props.rowData.name ,
+                    message: 'Are you sure?',
+                    type: 'error',
+                    useConfirmBtn: true,
+                    customConfirmBtnText: 'Yes',
+                    customCloseBtnText: 'No',
+                    customConfirmBtnClass: 'btn btn-primary btn-block margin-bottom btn-lg',
+                    customCloseBtnClass: 'btn btn-danger btn-block margin-bottom btn-lg',
+                    onConfirm: this.destroy
+                }
+                this.$refs.simplert.openSimplert(obj)
 
             }
         },
         components: {
+            Simplert,
             Loading,
             'va-footer': VAFooter,
             'va-navibar': VANaviBar,
@@ -533,6 +617,7 @@
             Spinner,
             ValidationProvider,
             ValidationObserver,
+
         }
     }
 </script>

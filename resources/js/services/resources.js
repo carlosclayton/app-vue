@@ -49,6 +49,10 @@ export default class Jwt {
         })
     }
 
+    static destroyUser(id){
+        return Vue.http.delete(`users/${id}`)
+    }
+
     static getUsers(page, limit, order, sort){
         return Vue.http.get(`users?page=${page}&limit=${limit}&orderBy=${order}&sortedBy=${sort}`);
     }

@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ (env('APP_ENV') === 'local') ? mix('css/app.css') : asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="sidebar-mini skin-blue">
+<body>
     <div id="app">
     </div>
 </body>

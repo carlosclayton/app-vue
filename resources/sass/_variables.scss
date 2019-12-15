@@ -18,3 +18,15 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
+
+.container button {
+  width: 100%;
+}
+
+.social-auth-links .container{
+  width: 100%;
+  margin-left: -15px;
+}
+.social-auth-links .container button{
+  width: 320px;
+}

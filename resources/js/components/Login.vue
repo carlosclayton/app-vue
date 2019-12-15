@@ -78,7 +78,7 @@
                 >
                 </facebook-login>
 
-                <button v-on:click="loginGoogle()" class="btn  btn-google"><i
+                <button v-on:click="loginGoogle()" class="btn  btn-google btn-block"><i
                         class="fa fa-google-plus"></i> Sign in using Google+
                 </button>
 
@@ -155,6 +155,8 @@
         },
         mounted() {
             console.log('Component mounted.')
+            document.body.className = 'hold-transition login-page';
+
         },
         methods: {
             getUserData() {

@@ -34,6 +34,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "facebook-login-vuejs": "^2.0.1",
+    "hooper": "^0.3.4",
     "lodash.orderby": "^4.6.0",
     "v-datatable-light": "^0.2.0",
     "vee-validate": "^3.1.3",

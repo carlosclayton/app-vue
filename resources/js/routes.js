@@ -5,10 +5,12 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Forgot from './components/Forgot';
 import Register from './components/Register';
+import Portal from './components/Portal';
 
 import UserList from './components/users/UserList';
 
 Vue.use(VueRouter);
+
 
 const router = new VueRouter({
     routes: [
@@ -42,8 +44,13 @@ const router = new VueRouter({
             component: UserList
         },
         {
+            path: '/',
+            component: Portal,
+            meta: { bodyClass: 'dashboard' }
+        },
+        {
             path: '*',
-            redirect: '/login'
+            redirect: '/'
         }
     ],
     mode: 'history'
@@ -51,7 +58,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
-    const publicPages = ['/login', '/forgot', '/register'];
+    const publicPages = ['/login', '/forgot', '/register', '/'];
     const authRequired = !publicPages.includes(to.path);
     // const loggedIn = localStorage.get('token');
     const loggedIn = store.state.loggingIn;

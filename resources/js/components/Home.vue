@@ -65,6 +65,7 @@
         },
         mounted() {
             console.log('Component mounted.')
+            document.body.className = 'skin-blue sidebar-mini';
         },
         methods: {
 
